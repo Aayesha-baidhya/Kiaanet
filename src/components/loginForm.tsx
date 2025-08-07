@@ -6,19 +6,19 @@ import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function LoginForm() {
   return (
-    <div className="w-1/2 min-h-screen bg-white flex flex-col justify-center items-center">
+    <div className="w-full md:w-3/4 lg:w-3/4 xl:w-1/2 min-h-screen bg-white flex flex-col justify-center items-center">
       
       <div className="w-[95%]"> {/* 💡 stretch nearly full width of right half */}
 
         {/* Logo */}
         <div className="mb-10 text-center">
-          <img src="/logo.svg" alt="Kiaanet Logo" className="mx-auto w-40"/>
+          <Image src="/logo.svg" alt="Kiaanet Logo" className="mx-auto w-40" width={100} height={50}/>
           {/* // <h1 className="text-5xl font-bold text-black">SMS</h1>
           // <p className="text-sm text-black">STUDENT MANAGEMENT SYSTEM</p> */}
         </div>
 
         {/* Login Box */}
-        <div className="w-full border border-gray-200 p-10 rounded-md hover:shadow-2xl transition-all duration-300">
+        <div className="w-full border border-gray-200 py-10 px-5 rounded-md hover:shadow-2xl transition-all duration-300">
           
           {/* Welcome Text - Left Aligned */}
           <div className="mb-6">
