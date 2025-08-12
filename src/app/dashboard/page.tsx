@@ -6,9 +6,9 @@ import React from 'react'
 export default function Dashboard() {
   return (
     <div className="flex h-screen overflow-hidden">
-      <SideBar />
-      <div className="flex flex-col flex-1">
-        <Navbar />
+    {/* //   <SideBar /> */}
+    <div className="flex flex-col flex-1">
+    {/* //     <Navbar /> */}
         <DashboardHeader />
         <div className="mx-6 mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-2xl">
           <span className="text-sm">
