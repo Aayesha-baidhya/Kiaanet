@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineDashboard } from "react-icons/md";
@@ -8,9 +8,37 @@ import { TbBooks } from "react-icons/tb";
 import { LuFileText } from "react-icons/lu";
 import { FaRegFile } from "react-icons/fa";
 import { IoList } from "react-icons/io5";
+import Link from 'next/link';
 
 const SideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Function to check window width and set collapse accordingly
+  const handleResize = () => {
+    if (window.innerWidth < 768) {
+      setIsCollapsed(true);
+    } else {
+      setIsCollapsed(false);
+    }
+  };
+
+  useEffect(() => {
+    // Set initial state
+    handleResize();
+
+    // Listen to window resize events
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Manually toggle collapse on icon click, but only if on mobile
+  const toggleCollapse = () => {
+    if (window.innerWidth < 768) {
+      setIsCollapsed(prev => !prev);
+    }
+  };
 
   return (
     <aside
@@ -24,7 +52,7 @@ const SideBar = () => {
         )}
         <VscListFlat
           className="text-black text-xl cursor-pointer"
-          onClick={() => setIsCollapsed(!isCollapsed)}
+          onClick={toggleCollapse}
         />
       </div>
 
@@ -38,48 +66,71 @@ const SideBar = () => {
       <nav className="space-y-3">
         <div className="hover:bg-blue-100 flex items-center hover:border hover:border-blue-300 px-4 py-2 rounded cursor-pointer">
           <MdOutlineDashboard className="text-blue-500 text-lg flex-shrink-0" />
-          <span
-            className={`ml-2 transition-all duration-200 overflow-hidden ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"}`}
-          >
-            Dashboard
-          </span>
+          <Link href="/dashboard">
+            <span
+              className={`ml-2 transition-all duration-200 overflow-hidden ${
+                isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+              }`}
+            >
+              Dashboard
+            </span>
+          </Link>
         </div>
+
         <div className="hover:bg-blue-100 flex items-center hover:border hover:border-blue-300 px-4 py-2 rounded cursor-pointer">
           <LuGraduationCap className="text-blue-500 text-lg flex-shrink-0" />
-          <span
-            className={`ml-2 transition-all duration-200 overflow-hidden ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"}`}
-          >
-            Students
-          </span>
+          <Link href="/dashboard/students">
+            <span
+              className={`ml-2 transition-all duration-200 overflow-hidden ${
+                isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+              }`}
+            >
+              Students
+            </span>
+          </Link>
         </div>
+
         <div className="hover:bg-blue-100 flex items-center hover:border hover:border-blue-300 px-4 py-2 rounded cursor-pointer">
           <TbBooks className="text-blue-500 text-lg flex-shrink-0" />
-          <span
-            className={`ml-2 transition-all duration-200 overflow-hidden ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"}`}
-          >
-            Courses
-          </span>
+          <Link href="/dashboard/courses">
+            <span
+              className={`ml-2 transition-all duration-200 overflow-hidden ${
+                isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+              }`}
+            >
+              Courses
+            </span>
+          </Link>
         </div>
+
         <div className="hover:bg-blue-100 flex items-center hover:border hover:border-blue-300 px-4 py-2 rounded cursor-pointer">
           <LuFileText className="text-blue-500 text-lg flex-shrink-0" />
           <span
-            className={`ml-2 transition-all duration-200 overflow-hidden ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"}`}
+            className={`ml-2 transition-all duration-200 overflow-hidden ${
+              isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+            }`}
           >
             Applications
           </span>
         </div>
+
         <div className="hover:bg-blue-100 flex items-center hover:border hover:border-blue-300 px-4 py-2 rounded cursor-pointer">
           <FaRegFile className="text-black text-lg flex-shrink-0" />
           <span
-            className={`ml-2 transition-all duration-200 overflow-hidden ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"}`}
+            className={`ml-2 transition-all duration-200 overflow-hidden ${
+              isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+            }`}
           >
             Applications List
           </span>
         </div>
+
         <div className="hover:bg-blue-100 flex items-center hover:border hover:border-blue-300 px-4 py-2 rounded cursor-pointer">
           <IoList className="text-black text-lg flex-shrink-0" />
           <span
-            className={`ml-2 transition-all duration-200 overflow-hidden ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"}`}
+            className={`ml-2 transition-all duration-200 overflow-hidden ${
+              isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+            }`}
           >
             New Application
           </span>
