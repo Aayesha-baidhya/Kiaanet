@@ -35,10 +35,10 @@ const SideBar = () => {
 
   // Manually toggle collapse on icon click, but only if on mobile
   const toggleCollapse = () => {
-    if (window.innerWidth < 768) {
-      setIsCollapsed(prev => !prev);
-    }
-  };
+  setIsCollapsed(prev => !prev);
+};
+
+
 
   return (
     <aside
