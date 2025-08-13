@@ -2,6 +2,7 @@ import Navbar from '@/components/navBar'
 import SideBar from '@/components/sideBar'
 import DashboardHeader from '@/components/dashboardHeader'
 import React from 'react'
+import DashboardStats from '@/components/dashboardstats'
 
 export default function Dashboard() {
   return (
@@ -29,12 +30,13 @@ export default function Dashboard() {
             Updated Recently on 15 Jun 2024
           </p>
         </div>
+        <div className="mx-6 mt-6">
+          <DashboardStats/>
+        </div>
         </div>
 
 
-        <main className="p-6 bg-gray-50 h-full overflow-y-auto">
-         
-        </main>
+        
       </div>
     
   )
