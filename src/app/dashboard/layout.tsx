@@ -8,11 +8,13 @@ export default function DashboardLayout({
 }) {
   return (
     <section>
-      <div className="flex h-screen overflow-hidden">
-        <SideBar />
-        <div className="flex flex-col flex-1">
+      <div className="flex h-screen max-w-screen">
+        <div>
+          <SideBar />
+        </div>
+        <div className="flex-1 overflow-x-auto">
           <Navbar />
-          {children}
+          <div>{children}</div>
         </div>
       </div>
     </section>

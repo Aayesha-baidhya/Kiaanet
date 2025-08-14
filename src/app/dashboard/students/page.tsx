@@ -4,11 +4,7 @@ import { FiPhone, FiRefreshCw, FiSearch } from "react-icons/fi";
 import { LuPrinter } from "react-icons/lu";
 import { CiFilter, CiLock, CiSquarePlus } from "react-icons/ci";
 import { TbFileArrowRight } from "react-icons/tb";
-import {
-  RiArrowDropDownLine,
-  RiCheckboxBlankCircleLine,
-  RiCheckboxBlankLine,
-} from "react-icons/ri";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdDelete, MdOutlineEmail } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 import {
@@ -130,7 +126,7 @@ const Student = () => {
       {/* ===== Students List Card ===== */}
       <div className="bg-white rounded-lg shadow m-6">
         {/* Card Header */}
-        <div className="p-4 border-b flex items-center justify-between gap-2 flex-wrap">
+        <div className="p-4 border-b flex items-center justify-between gap-2">
           <h1 className="text-md font-bold text-gray-900">Students List</h1>
           <div className="flex items-center gap-3 ml-6 flex-wrap">
             <button className=" border rounded-lg hover:bg-gray-100 px-3 py-2 gap-4 flex items-center">
@@ -151,10 +147,9 @@ const Student = () => {
             </button>
           </div>
         </div>
-
         {/* Table */}
-        <div className="overflow-x-scroll">
-          <table className="w-full text-sm text-left text-gray-600 min-w-max">
+        <div className="overflow-x-auto">
+          <table className="text-sm text-left text-gray-600 px-4">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700">
               <tr>
                 <th className="px-4 py-3 whitespace-nowrap">
@@ -216,7 +211,7 @@ const Student = () => {
                 </th>
                 <th className="px-4 py-3">
                   <div className="flex items-center justify-between">
-                    Date of Join
+                    <div className="whitespace-nowrap">Date of Join</div>
                     <button className="text-gray-500 ml-2">
                       <FaSort />
                     </button>
@@ -278,45 +273,44 @@ const Student = () => {
                     <button className="p-2 rounded hover:bg-gray-100">
                       <MdOutlineEmail />
                     </button>
-                    <button className="bg-gray-500 text-white rounded-lg text-sm flex items-center">
+                    <button className="bg-gray-500 text-white rounded-lg text-sm flex items-center whitespace-nowrap px-3">
                       Collect Fees
                     </button>
-                    <td className="relative group">
+                    <td>
                       {/* Trigger Button */}
                       <button className="p-2 rounded hover:bg-gray-100">
                         <SlOptionsVertical />
                       </button>
-
-                      {/* Dropdown Menu */}
-                      <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-10">
-                        <ul className="flex flex-col">
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaEye /> View Student
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaUserEdit /> Edit
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <CiLock />
-                            Login Details
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaBan /> Disable
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaArrowUp /> Promote Student
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <MdDelete /> Delete
-                          </li>
-                        </ul>
-                      </div>
                     </td>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {/* Dropdown Menu */}
+          <div className="mt-2 w-48 bg-white border rounded shadow-lg hidden">
+            <ul className="flex flex-col">
+              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <FaEye /> View Student
+              </li>
+              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <FaUserEdit /> Edit
+              </li>
+              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <CiLock />
+                Login Details
+              </li>
+              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <FaBan /> Disable
+              </li>
+              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <FaArrowUp /> Promote Student
+              </li>
+              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <MdDelete /> Delete
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </>

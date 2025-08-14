@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineDashboard } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
@@ -8,7 +8,7 @@ import { TbBooks } from "react-icons/tb";
 import { LuFileText } from "react-icons/lu";
 import { FaRegFile } from "react-icons/fa";
 import { IoList } from "react-icons/io5";
-import Link from 'next/link';
+import Link from "next/link";
 
 const SideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -27,22 +27,20 @@ const SideBar = () => {
     handleResize();
 
     // Listen to window resize events
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup listener on unmount
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Manually toggle collapse on icon click, but only if on mobile
   const toggleCollapse = () => {
-  setIsCollapsed(prev => !prev);
-};
-
-
+    setIsCollapsed((prev) => !prev);
+  };
 
   return (
     <aside
-      className={`sidebar bg-white shadow-md h-screen p-4 relative transition-all duration-300 
+      className={`bg-white shadow-md h-screen p-4 relative transition-all duration-300 
         ${isCollapsed ? "w-16" : "w-60 sm:w-60 md:w-48 lg:w-64"}`}
     >
       {/* Logo and List Icon */}
