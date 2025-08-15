@@ -28,8 +28,6 @@ const SideBar = () => {
 
     // Listen to window resize events
     window.addEventListener("resize", handleResize);
-
-    // Cleanup listener on unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
