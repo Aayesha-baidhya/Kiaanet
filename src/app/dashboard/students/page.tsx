@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiPhone, FiRefreshCw, FiSearch } from "react-icons/fi";
 import { LuPrinter } from "react-icons/lu";
 import { CiFilter, CiLock, CiSquarePlus } from "react-icons/ci";
@@ -19,6 +20,13 @@ import { FcGenericSortingDesc } from "react-icons/fc";
 import { RxDragHandleDots1 } from "react-icons/rx";
 
 const Student = () => {
+  const [menuOpenIndex, setMenuOpenIndex] = useState<number | null>(null);
+  // const [menuPosition, setMenuPosition] = useState<{
+  //   top: number;
+  //   left: number;
+  // }>({ top: 0, left: 0 });
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+
   const listOfStds = [
     {
       admissionNO: "AD9892434",
@@ -87,6 +95,15 @@ const Student = () => {
       dob: "20 Jun 2015",
     },
   ];
+  useEffect(() => {
+    if (menuOpenIndex !== null && btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      // setMenuPosition({
+      //   top: rect.bottom + window.scrollY,
+      //   left: rect.left + window.scrollX,
+      // });
+    }
+  }, [menuOpenIndex]);
 
   return (
     <>
@@ -161,7 +178,7 @@ const Student = () => {
                   </div>
                 </th>
 
-                <th className="px-4 py-3">
+                <th className="px-4 py-3 whitespace-nowrap">
                   <div className="flex items-center justify-between">
                     Roll No
                     <button className="text-gray-500 ml-2">
@@ -177,7 +194,7 @@ const Student = () => {
                     </button>
                   </div>
                 </th>
-                <th className="px-4 py-3">
+                <th className="px-2 py-3">
                   <div className="flex items-center justify-between">
                     Class
                     <button className="text-gray-500 ml-2">
@@ -185,8 +202,8 @@ const Student = () => {
                     </button>
                   </div>
                 </th>
-                <th className="px-4 py-3">
-                  <div className="flex items-center justify-between">
+                <th className="px-2 py-3">
+                  <div className="flex items-center">
                     Section
                     <button className="text-gray-500 ml-2">
                       <FaSort />
@@ -218,7 +235,7 @@ const Student = () => {
                   </div>
                 </th>
                 <th className="px-4 py-3">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center whitespace-nowrap">
                     DOB
                     <button className="text-gray-500 ml-2">
                       <FaSort />
@@ -262,7 +279,7 @@ const Student = () => {
                     </span>
                   </td>
                   <td className="px-4 py-3">{student.joinDate}</td>
-                  <td className="px-4 py-3">{student.dob}</td>
+                  <td className="px-4 py-3 whitespace-nowrap">{student.dob}</td>
                   <td className="px-4 py-3 flex space-x-2">
                     <button className="p-2 rounded hover:bg-gray-100">
                       <FiSearch />
@@ -276,41 +293,53 @@ const Student = () => {
                     <button className="bg-gray-500 text-white rounded-lg text-sm flex items-center whitespace-nowrap px-3">
                       Collect Fees
                     </button>
-                    <td>
-                      {/* Trigger Button */}
-                      <button className="p-2 rounded hover:bg-gray-100">
-                        <SlOptionsVertical />
-                      </button>
-                    </td>
+                    {/* Trigger Button */}
+                    <button
+                      className=" p-2 rounded hover:bg-gray-100 relative"
+                      ref={idx === menuOpenIndex ? btnRef : null}
+                      onClick={(e) => {
+                        setMenuOpenIndex(menuOpenIndex === idx ? null : idx);
+                        e.stopPropagation();
+                      }}
+                    >
+                      <SlOptionsVertical />
+                    </button>
+                    {menuOpenIndex === idx && (
+                      <div
+                        className="mt-2 w-48 bg-white border rounded shadow-lg absolute right-20"
+                        // style={{
+                        //   top: `${menuPosition.top}px`,
+                        //   left: `${menuPosition.left}px`,
+                        // }}
+                      >
+                        <ul className="flex flex-col">
+                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            <FaEye /> View Student
+                          </li>
+                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            <FaUserEdit /> Edit
+                          </li>
+                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            <CiLock />
+                            Login Details
+                          </li>
+                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            <FaBan /> Disable
+                          </li>
+                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            <FaArrowUp /> Promote Student
+                          </li>
+                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            <MdDelete /> Delete
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {/* Dropdown Menu */}
-          <div className="mt-2 w-48 bg-white border rounded shadow-lg hidden">
-            <ul className="flex flex-col">
-              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                <FaEye /> View Student
-              </li>
-              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                <FaUserEdit /> Edit
-              </li>
-              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                <CiLock />
-                Login Details
-              </li>
-              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                <FaBan /> Disable
-              </li>
-              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                <FaArrowUp /> Promote Student
-              </li>
-              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                <MdDelete /> Delete
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
     </>
