@@ -381,9 +381,11 @@ const Student = () => {
                             }`}
                           >
                             <ul className="flex flex-col">
+                            <Link href={`/students/${student.admissionNO}`}>
                               <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
                                 <FaEye /> View Student
                               </li>
+                              </Link>
                               <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
                                 <FaUserEdit /> Edit
                               </li>
