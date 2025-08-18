@@ -20,13 +20,26 @@ import { FcGenericSortingDesc } from "react-icons/fc";
 import { RxDragHandleDots1 } from "react-icons/rx";
 
 const Student = () => {
-  const [menuOpenIndex, setMenuOpenIndex] = useState<number | null>(null);
-  // const [menuPosition, setMenuPosition] = useState<{
-  //   top: number;
-  //   left: number;
-  // }>({ top: 0, left: 0 });
-  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const [menuPosition, setMenuPosition] = useState<{
+    index: number;
+    openUp: boolean;
+  } | null>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  // Close menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuPosition &&
+        buttonRefs.current[menuPosition.index] &&
+        !buttonRefs.current[menuPosition.index]?.contains(e.target as Node)
+      ) {
+        setMenuPosition(null);
+      }
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, [menuPosition]);
   const listOfStds = [
     {
       admissionNO: "AD9892434",
@@ -94,19 +107,65 @@ const Student = () => {
       joinDate: "11 Feb 2024",
       dob: "20 Jun 2015",
     },
+    {
+      admissionNO: "AD9892429",
+      rollNo: 35008,
+      name: "Ralph",
+      class: "III",
+      section: "B",
+      gender: "Male",
+      status: "Active",
+      joinDate: "11 Feb 2024",
+      dob: "20 Jun 2015",
+    },
+    {
+      admissionNO: "AD9892429",
+      rollNo: 35008,
+      name: "Ralph",
+      class: "III",
+      section: "B",
+      gender: "Male",
+      status: "Active",
+      joinDate: "11 Feb 2024",
+      dob: "20 Jun 2015",
+    },
+    {
+      admissionNO: "AD9892429",
+      rollNo: 35008,
+      name: "Ralph",
+      class: "III",
+      section: "B",
+      gender: "Male",
+      status: "Active",
+      joinDate: "11 Feb 2024",
+      dob: "20 Jun 2015",
+    },
+    {
+      admissionNO: "AD9892429",
+      rollNo: 35008,
+      name: "Ralph",
+      class: "III",
+      section: "B",
+      gender: "Male",
+      status: "Active",
+      joinDate: "11 Feb 2024",
+      dob: "20 Jun 2015",
+    },
+    {
+      admissionNO: "AD9892429",
+      rollNo: 35008,
+      name: "Ralph",
+      class: "III",
+      section: "B",
+      gender: "Male",
+      status: "Active",
+      joinDate: "11 Feb 2024",
+      dob: "20 Jun 2015",
+    },
   ];
-  useEffect(() => {
-    if (menuOpenIndex !== null && btnRef.current) {
-      const rect = btnRef.current.getBoundingClientRect();
-      // setMenuPosition({
-      //   top: rect.bottom + window.scrollY,
-      //   left: rect.left + window.scrollX,
-      // });
-    }
-  }, [menuOpenIndex]);
 
   return (
-    <>
+    <div className="">
       {/* ===== Page Header ===== */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between px-6 py-4 border-b bg-white">
         <div>
@@ -294,47 +353,58 @@ const Student = () => {
                       Collect Fees
                     </button>
                     {/* Trigger Button */}
-                    <button
-                      className=" p-2 rounded hover:bg-gray-100 relative"
-                      ref={idx === menuOpenIndex ? btnRef : null}
-                      onClick={(e) => {
-                        setMenuOpenIndex(menuOpenIndex === idx ? null : idx);
-                        e.stopPropagation();
-                      }}
-                    >
-                      <SlOptionsVertical />
-                    </button>
-                    {menuOpenIndex === idx && (
-                      <div
-                        className="mt-2 w-48 bg-white border rounded shadow-lg absolute right-20"
-                        // style={{
-                        //   top: `${menuPosition.top}px`,
-                        //   left: `${menuPosition.left}px`,
-                        // }}
-                      >
-                        <ul className="flex flex-col">
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaEye /> View Student
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaUserEdit /> Edit
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <CiLock />
-                            Login Details
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaBan /> Disable
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <FaArrowUp /> Promote Student
-                          </li>
-                          <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                            <MdDelete /> Delete
-                          </li>
-                        </ul>
+                    <div>
+                      <div className="relative">
+                        <button
+                          ref={(el) => {
+                            buttonRefs.current[idx] = el;
+                          }}
+                          className="p-2 rounded hover:bg-gray-100"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const rect =
+                              e.currentTarget.getBoundingClientRect();
+                            const shouldOpenUp =
+                              window.innerHeight - rect.bottom < 200; // if less than 200px space below
+                            setMenuPosition({
+                              index: idx,
+                              openUp: shouldOpenUp,
+                            });
+                          }}
+                        >
+                          <SlOptionsVertical />
+                        </button>
+                        {menuPosition?.index === idx && (
+                          <div
+                            className={`absolute right-5 z-50 w-48 bg-white border rounded shadow-lg  ${
+                              menuPosition.openUp ? "bottom-full" : "top-full"
+                            }`}
+                          >
+                            <ul className="flex flex-col">
+                              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                <FaEye /> View Student
+                              </li>
+                              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                <FaUserEdit /> Edit
+                              </li>
+                              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                <CiLock />
+                                Login Details
+                              </li>
+                              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                <FaBan /> Disable
+                              </li>
+                              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                <FaArrowUp /> Promote Student
+                              </li>
+                              <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                <MdDelete /> Delete
+                              </li>
+                            </ul>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -342,7 +412,7 @@ const Student = () => {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Student;
