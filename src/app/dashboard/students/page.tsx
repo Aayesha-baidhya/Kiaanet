@@ -44,7 +44,7 @@ const Student = () => {
     {
       admissionNO: "AD9892434",
       rollNo: 35013,
-      name: "Aviana Shrestha",
+      name: "Janet Thompson",
       class: "III",
       section: "A",
       gender: "Female",
@@ -315,7 +315,7 @@ const Student = () => {
               {listOfStds.map((student, idx) => (
                 <tr key={idx} className="border-b hover:bg-gray-50">
                   <td className="px-4 py-3 text-blue-600 font-medium">
-                    <Link href={`/students/${student.admissionNO}`}>
+                    <Link href={`dashboard/students/${student.admissionNO}`}>
                       {student.admissionNO}
                     </Link>
                   </td>
@@ -381,7 +381,8 @@ const Student = () => {
                             }`}
                           >
                             <ul className="flex flex-col">
-                            <Link href={`/students/${student.admissionNO}`}>
+                             <Link href={`/dashboard/students/${student.admissionNO}`}>
+                            
                               <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
                                 <FaEye /> View Student
                               </li>
