@@ -1,11 +1,13 @@
 "use client";
 import React from "react";
 import { z } from "zod";
-import {  SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { LuNotebookText } from "react-icons/lu";
 import { MdOutlineLibraryBooks } from "react-icons/md";
 import { PiBookOpenText } from "react-icons/pi";
 import { zodResolver } from "@hookform/resolvers/zod";
+import CommonTextField from "./shared/forms/commonTextField";
+import CommonSelectField from "./shared/forms/commonSelectField";
 
 const Coursesschema = z.object({
   courseName: z.string().min(1, "Course name is required"),
@@ -20,7 +22,9 @@ const Coursesschema = z.object({
   studyPeriod: z.string().optional(),
   courseDurationType: z.string().optional(),
   domesticDuration: z.string().min(1, "Domestic duration is required"),
-  internationalDuration: z.string().min(1, "International duration is required"),
+  internationalDuration: z
+    .string()
+    .min(1, "International duration is required"),
   holidays: z.string().optional(),
   partTimeDuration: z.string().optional(),
   totalCore: z.string().min(1, "Total core units required"),
@@ -45,8 +49,12 @@ const Coursesschema = z.object({
 type Courses = z.infer<typeof Coursesschema>;
 
 const AddCourses = () => {
-  const { register, handleSubmit } = useForm({
-    resolver: zodResolver(Coursesschema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(Coursesschema),
   });
 
   const onSubmit: SubmitHandler<Courses> = (data: Courses) => {
@@ -79,79 +87,132 @@ const AddCourses = () => {
               Course Details
             </h2>
             <div className="space-y-4">
-              <input
+              {/* <input
                 type="text"
                 placeholder="Official Course Name *"
                 {...register("courseName")}
                 className={inputClass}
               />
-              <select
+              {errors.courseName && (<p>{errors.courseName.message}</p>)} */}
+              <CommonTextField
+                label="Official Course Name"
+                placeholder="Enter course name"
+                registration={register("courseName")}
+                error={errors.courseName}
+              />
+              {/* <select
                 {...register("courseType", {
                   required: "Fill the data",
                 })}
                 className={inputClass}
               >
                 <option value="">Course Type *</option>
-              </select>
-              <select {...register("deliveryMode")} className={inputClass}>
-                <option value="">Course Delivery Mode</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Nominal Hours"
-                {...register("nominalHours")}
-                className={inputClass}
+                <option value="computing">Computing</option>
+              </select> */}
+              <CommonSelectField
+                label="Course type"
+                registration={register("courseType")}
+                error={errors.courseType}
+                options={[
+                  { value: "computing", label: "Computing" },
+                  { value: "iot", label: "IOT" },
+                  { value: "se", label: "Software Engineering" },
+                ]}
               />
-              <select {...register("isConcessional")} className={inputClass}>
-                <option value="">Is Concessional</option>
-              </select>
-              <select {...register("isPriority")} className={inputClass}>
-                <option value="">Is Priority1 Course</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Minimum Units for Vocational Placement"
-                {...register("minUnits")}
-                className={inputClass}
+              <CommonSelectField
+                label="Course Delivery Mode"
+                registration={register("deliveryMode")}
+                error={errors.deliveryMode}
+                options={[
+                  { value: "online", label: "Online" },
+                  { value: "offline", label: "Offline" },
+                ]}
               />
-              <select {...register("displayInPortal")} className={inputClass}>
-                <option value="">Display in Portal</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Upfront Amount *"
-                {...register("upfrontAmount")}
-                className={inputClass}
+              <CommonTextField
+                label="Nominal Hours"
+                placeholder="Enter the hour"
+                registration={register("nominalHours")}
+                error={errors.nominalHours}
               />
-              <input
-                type="text"
-                placeholder="Study Period Value"
-                {...register("studyPeriod")}
-                className={inputClass}
+              <CommonSelectField
+                label="Is Concessional"
+                registration={register("isConcessional")}
+                error={errors.isConcessional}
+                options={[
+                  { value: "yes", label: "Yes" },
+                  { value: "yes", label: "No" },
+                  { value: "maybe", label: "Maybe" },
+                ]}
+              />
+              <CommonSelectField
+                label="Is Priority1 Course"
+                registration={register("isPriority")}
+                error={errors.isPriority}
+                options={[
+                  { value: "yes", label: "Yes" },
+                  { value: "yes", label: "No" },
+                ]}
+              />
+              <CommonTextField
+                label="Minimum Units for Vocational Placement"
+                placeholder="Enter the appropriate data"
+                registration={register("minUnits")}
+                error={errors.minUnits}
+              />
+              <CommonSelectField
+                label="Display in Portal"
+                registration={register("displayInPortal")}
+                error={errors.displayInPortal}
+                options={[
+                  { value: "yes", label: "Yes" },
+                  { value: "yes", label: "No" },
+                ]}
+              />
+              <CommonTextField
+                label="Upfront Amount *"
+                placeholder="Enter the amount"
+                registration={register("upfrontAmount")}
+                error={errors.upfrontAmount}
+              />
+              <CommonTextField
+                label="Study Period Value"
+                placeholder="Enter the value"
+                registration={register("studyPeriod")}
+                error={errors.studyPeriod}
               />
               <select
                 {...register("courseDurationType")}
                 className={inputClass}
               >
                 <option value="">Course Duration Type</option>
+                <option value="4">4 year</option>
               </select>
-              <input
-                type="text"
-                placeholder="Domestic Duration Full Time *"
-                {...register("domesticDuration")}
-                className={inputClass}
+              <CommonSelectField
+                label="Display in Portal"
+                registration={register("displayInPortal")}
+                error={errors.displayInPortal}
+                options={[
+                  { value: "yes", label: "Yes" },
+                  { value: "yes", label: "No" },
+                ]}
               />
-              <input
-                type="text"
-                placeholder="International Duration Full Time *"
-                {...register("internationalDuration")}
-                className={inputClass}
+              <CommonTextField
+                label="Domestic Duration Full Time *"
+                placeholder="Enter the duration"
+                registration={register("domesticDuration")}
+                error={errors.domesticDuration}
               />
-              <input
-                type="text"
-                placeholder="Holidays"
-                {...register("holidays")}
-                className={inputClass}
+              <CommonTextField
+                label="International Duration Full Time *"
+                placeholder="Enter the duration"
+                registration={register("internationalDuration")}
+                error={errors.internationalDuration}
+              />
+              <CommonTextField
+                label="Holidays"
+                placeholder="Enter the holidays"
+                registration={register("holidays")}
+                error={errors.holidays}
               />
               <input
                 type="text"
@@ -159,41 +220,53 @@ const AddCourses = () => {
                 {...register("partTimeDuration")}
                 className={inputClass}
               />
+              <CommonTextField
+                label="Holidays"
+                placeholder="Enter the holidays"
+                registration={register("holidays")}
+                error={errors.holidays}
+              />
               <input
                 type="text"
                 placeholder="Total No. of Core *"
                 {...register("totalCore")}
                 className={inputClass}
               />
-              <input
-                type="text"
-                placeholder="Total No. of Elective *"
-                {...register("totalElective")}
-                className={inputClass}
+              <CommonTextField
+                label="Holidays"
+                placeholder="Enter the holidays"
+                registration={register("holidays")}
+                error={errors.holidays}
               />
-              <input
-                type="text"
-                placeholder="Total No. of Units *"
-                {...register("totalUnits")}
-                className={inputClass}
+              <CommonTextField
+                label="Total No. of Elective *"
+                placeholder="Enter the correct number"
+                registration={register("totalElective")}
+                error={errors.totalElective}
               />
-              <input
-                type="text"
-                placeholder="No. of Terms"
-                {...register("terms")}
-                className={inputClass}
+              <CommonTextField
+                label="Total No. of Units *"
+                placeholder="Enter the units"
+                registration={register("totalUnits")}
+                error={errors.totalUnits}
               />
-              <input
-                type="text"
-                placeholder="No. of Units Per Term"
-                {...register("unitsPerTerm")}
-                className={inputClass}
+              <CommonTextField
+                label="No. of Terms"
+                placeholder="Enter the number"
+                registration={register("terms")}
+                error={errors.terms}
               />
-              <input
-                type="text"
-                placeholder="Coordinator"
-                {...register("coordinator")}
-                className={inputClass}
+              <CommonTextField
+                label="No. of Units Per Term"
+                placeholder="Enter the units"
+                registration={register("unitsPerTerm")}
+                error={errors.unitsPerTerm}
+              />
+              <CommonTextField
+                label="Coordinator"
+                placeholder=""
+                registration={register("coordinator")}
+                error={errors.coordinator}
               />
             </div>
           </div>
@@ -207,59 +280,68 @@ const AddCourses = () => {
                 Course Classification and Reporting
               </h2>
               <div className="space-y-4">
-                <select {...register("avetmiss")} className={inputClass}>
-                  <option value="">For AVETMISS</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="ASCO Code"
-                  {...register("ascoCode")}
-                  className={inputClass}
+                <CommonSelectField
+                  label="For AVETMISS"
+                  registration={register("avetmiss")}
+                  error={errors.avetmiss}
+                  options={[{ value: "NAT00080", label: "NAT00080" }]}
                 />
-                <input
-                  type="text"
-                  placeholder="ANZSCO Code"
-                  {...register("anzscoCode")}
-                  className={inputClass}
+                <CommonTextField
+                  label="ASCO Code"
+                  placeholder="Enter the Code"
+                  registration={register("ascoCode")}
+                  error={errors.ascoCode}
                 />
-                <input
-                  type="text"
-                  placeholder="CRICOS Code"
-                  {...register("cricosCode")}
-                  className={inputClass}
+                <CommonTextField
+                  label="ANZSCO Code"
+                  placeholder="Enter the Code"
+                  registration={register("anzscoCode")}
+                  error={errors.anzscoCode}
                 />
-                <input
-                  type="text"
-                  placeholder="NTIS Course Code"
-                  {...register("ntisCode")}
-                  className={inputClass}
+                <CommonTextField
+                  label="CRICOS Code"
+                  placeholder="Enter the Code"
+                  registration={register("cricosCode")}
+                  error={errors.cricosCode}
                 />
-                <select
-                  {...register("recognitionStatus")}
-                  className={inputClass}
-                >
-                  <option value="">Recognition Status *</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="Qualification Category"
-                  {...register("qualificationCategory")}
-                  className={inputClass}
+                <CommonTextField
+                  label="NTIS Course Code"
+                  placeholder=""
+                  registration={register("ntisCode")}
+                  error={errors.ntisCode}
                 />
-                <input
-                  type="text"
-                  placeholder="Qualification Field of Education"
-                  {...register("qualificationField")}
-                  className={inputClass}
+                <CommonSelectField
+                  label="Recognition Status *"
+                  registration={register("recognitionStatus")}
+                  error={errors.recognitionStatus}
+                  options={[{ value: "global", label: "Global" }]}
                 />
-                <select {...register("hepcat")} className={inputClass}>
-                  <option value="">Report to HEPCAT</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="EFTSL"
-                  {...register("eftsl")}
-                  className={inputClass}
+                <CommonTextField
+                  label="Qualification Category"
+                  placeholder=""
+                  registration={register("qualificationCategory")}
+                  error={errors.qualificationCategory}
+                />
+                <CommonTextField
+                  label="Qualification Field of Education"
+                  placeholder=""
+                  registration={register("qualificationField")}
+                  error={errors.qualificationField}
+                />
+                <CommonSelectField
+                  label="Report to HEPCAT"
+                  registration={register("hepcat")}
+                  error={errors.hepcat}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "yes", label: "No" },
+                  ]}
+                />
+                <CommonTextField
+                  label="EFTSL"
+                  placeholder=""
+                  registration={register("eftsl")}
+                  error={errors.eftsl}
                 />
               </div>
             </div>
@@ -271,12 +353,15 @@ const AddCourses = () => {
                 Placement Information
               </h2>
               <div className="space-y-4">
-                <select
-                  {...register("placementRequired")}
-                  className={inputClass}
-                >
-                  <option value="">Is Placement Required?</option>
-                </select>
+                <CommonSelectField
+                  label="Is Placement Required?"
+                  registration={register("placementRequired")}
+                  error={errors.placementRequired}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "yes", label: "No" },
+                  ]}
+                />
               </div>
             </div>
           </div>
