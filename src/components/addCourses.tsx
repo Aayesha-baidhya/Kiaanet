@@ -8,6 +8,7 @@ import { PiBookOpenText } from "react-icons/pi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CommonTextField from "./shared/forms/commonTextField";
 import CommonSelectField from "./shared/forms/commonSelectField";
+import CommonNumberField from "./shared/forms/commonNUmberField";
 
 const Coursesschema = z.object({
   courseName: z.string().min(1, "Course name is required"),
@@ -168,9 +169,8 @@ const AddCourses = () => {
                   { value: "yes", label: "No" },
                 ]}
               />
-              <CommonTextField
+              <CommonNumberField
                 label="Upfront Amount *"
-                placeholder="Enter the amount"
                 registration={register("upfrontAmount")}
                 error={errors.upfrontAmount}
               />
