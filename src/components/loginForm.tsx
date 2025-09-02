@@ -1,10 +1,21 @@
 // components/LoginForm.tsx
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { MdOutlineMail } from 'react-icons/md';
 import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function LoginForm() {
+  //React states for form
+  const[email, setEmail] = useState("");
+  const[password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent)=>{
+    //To prevent page reloading
+    e.preventDefault();
+    console.log("Email:", email)
+    console.log("Password:", password)
+  };
   return (
     <div className="w-full md:w-3/4 lg:w-3/4 xl:w-1/2 min-h-screen bg-white flex flex-col justify-center items-center">
       
@@ -26,14 +37,16 @@ export default function LoginForm() {
             <p className="text-gray-500 text-left">Please enter your details to sign in</p>
           </div>
 
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="relative">
               <label className="block mb-1 text-sm font-medium">Email Address</label>
               <input
                 type="email"
                 className="w-full p-3 border rounded bg-gray-100"
                 placeholder="example@mail.com"
-                defaultValue="mallasresta@gmail.com"
+                // defaultValue="mallasresta@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} 
               />
               <MdOutlineMail className="absolute right-3 top-10 text-black text-xl"  />
             </div>
@@ -43,7 +56,9 @@ export default function LoginForm() {
                 type="password"
                 className="w-full p-3 border rounded bg-gray-100"
                 placeholder="••••••"
-                defaultValue="password"
+                // defaultValue="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} 
               />
                 <FaRegEyeSlash className="absolute right-3 top-10 text-black text-xl"/>
             </div>
