@@ -8,7 +8,7 @@ import { PiBookOpenText } from "react-icons/pi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CommonTextField from "./shared/forms/commonTextField";
 import CommonSelectField from "./shared/forms/commonSelectField";
-import CommonNumberField from "./shared/forms/commonNUmberField";
+import CommonNumberField from "./shared/forms/commonNumberField";
 
 const Coursesschema = z.object({
   courseName: z.string().min(1, "Course name is required"),
@@ -141,7 +141,7 @@ const AddCourses = () => {
                 error={errors.isConcessional}
                 options={[
                   { value: "yes", label: "Yes" },
-                  { value: "yes", label: "No" },
+                  { value: "no", label: "No" },
                   { value: "maybe", label: "Maybe" },
                 ]}
               />
@@ -151,7 +151,7 @@ const AddCourses = () => {
                 error={errors.isPriority}
                 options={[
                   { value: "yes", label: "Yes" },
-                  { value: "yes", label: "No" },
+                  { value: "no", label: "No" },
                 ]}
               />
               <CommonTextField
@@ -166,7 +166,7 @@ const AddCourses = () => {
                 error={errors.displayInPortal}
                 options={[
                   { value: "yes", label: "Yes" },
-                  { value: "yes", label: "No" },
+                  { value: "no", label: "No" },
                 ]}
               />
               <CommonNumberField
@@ -193,7 +193,7 @@ const AddCourses = () => {
                 error={errors.displayInPortal}
                 options={[
                   { value: "yes", label: "Yes" },
-                  { value: "yes", label: "No" },
+                  { value: "no", label: "No" },
                 ]}
               />
               <CommonTextField
@@ -334,7 +334,7 @@ const AddCourses = () => {
                   error={errors.hepcat}
                   options={[
                     { value: "yes", label: "Yes" },
-                    { value: "yes", label: "No" },
+                    { value: "no", label: "No" },
                   ]}
                 />
                 <CommonTextField
@@ -359,7 +359,7 @@ const AddCourses = () => {
                   error={errors.placementRequired}
                   options={[
                     { value: "yes", label: "Yes" },
-                    { value: "yes", label: "No" },
+                    { value: "no", label: "No" },
                   ]}
                 />
               </div>
